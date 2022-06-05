@@ -59,7 +59,7 @@ namespace UserCenterWebApi
             services.Configure<IISServerOptions>(x => x.AllowSynchronousIO = true);
 
             //全局配置NLog
-            LogManager.Configuration = new XmlLoggingConfiguration(AppDomain.CurrentDomain.BaseDirectory + @"Configs\nlog.config");
+            LogManager.Configuration = new XmlLoggingConfiguration(AppDomain.CurrentDomain.BaseDirectory + @"Configs/nlog.config");
 
             //注入配置文件配置项
             services.AddConfigOptions(Configuration);

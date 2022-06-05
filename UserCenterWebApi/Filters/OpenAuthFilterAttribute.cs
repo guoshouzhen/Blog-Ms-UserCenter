@@ -89,7 +89,7 @@ namespace UserCenterWebApi.Filters
             dictPostData["token"] = _token;
             dictPostData["auths"] = _lstAuths?.Select(x => x.ToString())?.ToArray();
 
-            ApiResult apiResult = await _httpClientHelper.GetDataFromAuthCenterAsync("authcenter/api/innerapi/check_auth", dictPostData);
+            ApiResult apiResult = await _httpClientHelper.GetDataFromAuthCenterAsync("api/innerapi/check_auth", dictPostData);
             if (apiResult == null) 
             {
                 throw new ServiceException(ErrorCodeVo.A0008);

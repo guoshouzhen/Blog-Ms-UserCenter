@@ -18,7 +18,7 @@ namespace UserCenterWebApi.Controllers.OpenApi
     /// ApiController自动实现参数自动序列化
     /// </summary>
     [ServiceFilter(typeof(OpenAuthFilterAttribute))]
-    [Route("usercenter/api/openapi")]
+    [Route("api/openapi")]
     [ApiController]
     public class UserController:ControllerBase
     {

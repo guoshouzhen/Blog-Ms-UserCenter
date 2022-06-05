@@ -90,7 +90,7 @@ namespace Infrastructure.Sockets
                 reDatacLen += aryRecDataLen[3] & 0xff;
                 if (reDatacLen == 0)
                 {
-                    return null;
+                    return string.Empty;
                 }
 
                 while (true)

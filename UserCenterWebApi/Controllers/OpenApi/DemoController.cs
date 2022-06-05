@@ -1,20 +1,18 @@
-﻿using Infrastructure.Models.Attributes;
-using Infrastructure.Models.Model;
+﻿using Infrastructure.Models.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Model.Enums;
 using Service.Demo;
 using System.Threading.Tasks;
 using UserCenterWebApi.Filters;
 
-namespace UserCenterWebApi.Controllers.Demo
+namespace UserCenterWebApi.Controllers.OpenApi
 {
-    [Route("usercenter/api/demo")]
+    [Route("api/openapi/demo")]
     [ServiceFilter(typeof(OpenAuthFilterAttribute))]
-    public class DemoController: ControllerBase
+    public class DemoController : ControllerBase
     {
         /// <summary>
-        /// 测试用服务
+        /// Api测试用服务
         /// </summary>
         private readonly IDemoService _demoService;
 
@@ -29,9 +27,9 @@ namespace UserCenterWebApi.Controllers.Demo
         /// <returns></returns>
         [HttpGet("apitest")]
         [AllowAnonymous]
-        public async Task<string> DemoAction()
+        public async Task<ApiResult> DemoAction()
         {
-            return await _demoService.GetTestStringsAsync();
+            return await Task.FromResult(ApiResult.Success());
         }
 
         /// <summary>
@@ -39,9 +37,10 @@ namespace UserCenterWebApi.Controllers.Demo
         /// </summary>
         /// <returns></returns>
         [HttpGet("logtest")]
-        public async Task<ApiResult> TestLog() 
+        [AllowAnonymous]
+        public async Task<ApiResult> TestLog()
         {
-            var result = await _demoService.GetLogTestStringsAsync();
+            var result = await _demoService.TestLogsAsync();
             return ApiResult.Success(result);
         }
 
@@ -50,11 +49,23 @@ namespace UserCenterWebApi.Controllers.Demo
         /// </summary>
         /// <returns></returns>
         [HttpGet("dbtest")]
-        [RequiredAuthorities(AuthorityEnum.ROLE_ADMIN)]
+        [AllowAnonymous]
         public async Task<ActionResult<ApiResult>> TestDb()
         {
-            var user = await _demoService.GetUserAsync();
+            var user = await _demoService.TestMysqlAsync();
             return ApiResult.Success(user);
+        }
+
+        /// <summary>
+        /// socket测试
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("sockettest")]
+        [AllowAnonymous]
+        public async Task<ActionResult<ApiResult>> TestSocket()
+        {
+            var ids = await _demoService.TestIdServerAsync();
+            return ApiResult.Success(ids);
         }
     }
 }

@@ -2,10 +2,13 @@
 using Dal.DalBases;
 using Infrastructure.Autofac.Attributes;
 using Infrastructure.Log;
+using Infrastructure.Models.Model;
 using Infrastructure.Sockets;
+using Infrastructure.Utils;
 using Model.Constant;
 using Model.Entities;
 using Model.Enums;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -29,7 +32,7 @@ namespace Service.Demo.Impl
         /// 日志测试
         /// </summary>
         /// <returns></returns>
-        public async Task<string> GetLogTestStringsAsync()
+        public async Task<string> TestLogsAsync()
         {
             for (int i = 0; i < 2; i++)
             {
@@ -44,23 +47,26 @@ namespace Service.Demo.Impl
         }
 
         /// <summary>
-        /// api测试
+        /// socket服务测试
         /// </summary>
         /// <returns></returns>
-        public async Task<string> GetTestStringsAsync()
+        public async Task<List<long>> TestIdServerAsync()
         {
+            string ipAddr = "116.205.186.117";
+            int port = 55666;
             string param = "100" + SplitorConstant.SPLIT_26 + "idserver";
-
-            string result = string.Empty;
+            List<long> lstIds = new List<long>();
             Stopwatch watch = new Stopwatch();
             watch.Start();
             int count = 0;
             for (int i = 0; i < 4000; i++) 
             {
 
-                result = _socketClient.GetSocketData("127.0.0.1", 55666, param);
-                if (!string.IsNullOrEmpty(result))
+                string result = _socketClient.GetSocketData(ipAddr, port, param);
+                var apiResult = JsonUtil.Json2Object<ApiResult>(result);
+                if (apiResult != null && apiResult.Result == ApiResultSuccessConstant.STATUS)
                 {
+                    lstIds.Add((long)apiResult.Data);
                     count++;
                 }
                 
@@ -68,18 +74,18 @@ namespace Service.Demo.Impl
             watch.Stop();
             long costTime = watch.ElapsedMilliseconds;
             _loggerHelper.InfoLog($"总计调用成功{count}次，花费时间{costTime}ms，平均{(costTime * 1.0) / count}ms");
-            return await Task.FromResult("user center run successfuly!");
+            return await Task.FromResult(lstIds);
         }
 
         /// <summary>
         /// mysql测试
         /// </summary>
         /// <returns></returns>
-        public async Task<User> GetUserAsync() 
+        public async Task<User> TestMysqlAsync() 
         {
             var user = await _demoDal.GetUserByIdAsync(1);
 
-            var authName = await _demoDal.GetAuthoritiesOfUserAsync(1);
+            //var authName = await _demoDal.GetAuthoritiesOfUserAsync(1);
             return user;
         }
     }

@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "Model\Model.csproj
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{36DCB783-485A-490F-AE2F-5A871C2B3A7A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{72717489-8381-4C9F-A1FC-5F0E7C438098}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest", "UnitTest\UnitTest.csproj", "{72717489-8381-4C9F-A1FC-5F0E7C438098}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

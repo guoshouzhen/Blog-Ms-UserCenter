@@ -177,7 +177,7 @@ namespace Service.Users.Impl
             dicPostData["userId"] = lUserId;
             dicPostData["dbId"] = strDbId;
 
-            ApiResult apiResult = await _httpClientHelper.GetDataFromAuthCenterAsync("authcenter/api/innerapi/token_get", dicPostData);
+            ApiResult apiResult = await _httpClientHelper.GetDataFromAuthCenterAsync("api/innerapi/token_get", dicPostData);
             if (apiResult == null || apiResult.Result != ApiResultSuccessConstant.STATUS) 
             {
                 return string.Empty;

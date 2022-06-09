@@ -42,19 +42,7 @@ namespace Dal.DalBases.Impl
             {
                 if (_unitOfWork == null) 
                 {
-                    switch (_dbIdConfig.DbId)
-                    {
-                        case "1":
-                            _unitOfWork = _serviceProvider.GetRequiredService<Blog1UnitOfWork>();
-                            break;
-                        case "2":
-                            _unitOfWork = _serviceProvider.GetRequiredService<Blog2UnitOfWork>();
-                            break;
-                        default:
-                            //默认使用1库（主库）
-                            _unitOfWork = _serviceProvider.GetRequiredService<Blog1UnitOfWork>();
-                            break;
-                    }
+                    _unitOfWork = CreateUnitOfWork(_dbIdConfig.DbId);
                 }
                 return _unitOfWork;
             }

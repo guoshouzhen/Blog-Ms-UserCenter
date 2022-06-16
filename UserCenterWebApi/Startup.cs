@@ -17,6 +17,7 @@ using Service;
 using System;
 using UserCenterWebApi.Exceptions;
 using UserCenterWebApi.Extensions;
+using UserCenterWebApi.Middlewares;
 
 namespace UserCenterWebApi
 {
@@ -90,18 +91,7 @@ namespace UserCenterWebApi
         /// <param name="env">程序运行的环境信息</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //异常处理
-            //if (env.IsDevelopment())
-            //{
-            //    app.UseDeveloperExceptionPage();
-            //}
-            //else
-            //{
-            //    app.UseExceptionHandler(configure =>
-            //    {
-            //        configure.Run(new MyExceptionHandler().HandleException);
-            //    });
-            //}
+            //全局异常处理
             app.UseExceptionHandler(configure =>
             {
                 configure.Run(new MyExceptionHandler().HandleExceptionAsync);
@@ -115,6 +105,9 @@ namespace UserCenterWebApi
                 context.Request.EnableBuffering();
                 return next(context);
             });
+
+            //请求监控
+            app.UseMiddleware<RequestDetailMiddleware>();
 
             app.UseRouting();
             app.UseEndpoints(endpoints =>

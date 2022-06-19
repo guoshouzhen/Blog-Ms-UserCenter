@@ -31,6 +31,8 @@ namespace UserCenterWebApi.Extensions
             services.Configure<AuthOptions>(configuration.GetSection("AuthOptions"));
             //socket服务配置注入
             services.Configure<SocketServerOptions>(configuration.GetSection("SocketServerOptions"));
+            //启用项注入
+            services.Configure<EnableItemOptions>(configuration.GetSection("EnableItemOptions"));
             return services;
         }
 

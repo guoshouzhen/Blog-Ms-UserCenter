@@ -105,11 +105,9 @@ namespace UserCenterWebApi
                 context.Request.EnableBuffering();
                 return next(context);
             });
-
-            //ÇëÇó¼à¿Ø
-            app.UseMiddleware<RequestDetailMiddleware>();
-
             app.UseRouting();
+            //ÇëÇó¼à¿Ø
+            app.UseRequestDetailLogging();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
